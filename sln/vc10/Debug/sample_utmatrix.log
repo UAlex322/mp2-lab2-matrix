@@ -1,0 +1,55 @@
+﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  sample_matrix.cpp
+D:\Visual Studio\source\repos\Lab2\include\utmatrix.h(254,26): warning C4018: '<': signed/unsigned mismatch
+D:\Visual Studio\source\repos\Lab2\include\utmatrix.h(252): message : while compiling class template member function 'TMatrix<int>::TMatrix(int)'
+D:\Visual Studio\source\repos\Lab2\samples\sample_matrix.cpp(13): message : see reference to function template instantiation 'TMatrix<int>::TMatrix(int)' being compiled
+D:\Visual Studio\source\repos\Lab2\samples\sample_matrix.cpp(13): message : see reference to class template instantiation 'TMatrix<int>' being compiled
+D:\Visual Studio\source\repos\Lab2\include\utmatrix.h(129,26): warning C4018: '<': signed/unsigned mismatch
+D:\Visual Studio\source\repos\Lab2\include\utmatrix.h(119): message : while compiling class template member function 'TVector<TVector<ValType>> &TVector<TVector<ValType>>::operator =(const TVector<TVector<ValType>> &)'
+          with
+          [
+              ValType=int
+          ]
+D:\Visual Studio\source\repos\Lab2\include\utmatrix.h(248): message : see reference to function template instantiation 'TVector<TVector<ValType>> &TVector<TVector<ValType>>::operator =(const TVector<TVector<ValType>> &)' being compiled
+          with
+          [
+              ValType=int
+          ]
+D:\Visual Studio\source\repos\Lab2\include\utmatrix.h(224): message : see reference to class template instantiation 'TVector<TVector<ValType>>' being compiled
+          with
+          [
+              ValType=int
+          ]
+D:\Visual Studio\source\repos\Lab2\include\utmatrix.h(83,35): warning C4018: '<': signed/unsigned mismatch
+D:\Visual Studio\source\repos\Lab2\include\utmatrix.h(80): message : while compiling class template member function 'TVector<TVector<ValType>>::TVector(const TVector<TVector<ValType>> &)'
+          with
+          [
+              ValType=int
+          ]
+D:\Visual Studio\source\repos\Lab2\include\utmatrix.h(270): message : see reference to function template instantiation 'TVector<TVector<ValType>>::TVector(const TVector<TVector<ValType>> &)' being compiled
+          with
+          [
+              ValType=int
+          ]
+D:\Visual Studio\source\repos\Lab2\include\utmatrix.h(269): message : while compiling class template member function 'TMatrix<int>::TMatrix(const TVector<TVector<ValType>> &)'
+          with
+          [
+              ValType=int
+          ]
+D:\Visual Studio\source\repos\Lab2\samples\sample_matrix.cpp(25): message : see reference to function template instantiation 'TMatrix<int>::TMatrix(const TVector<TVector<ValType>> &)' being compiled
+          with
+          [
+              ValType=int
+          ]
+D:\Visual Studio\source\repos\Lab2\include\utmatrix.h(170,35): warning C4018: '<': signed/unsigned mismatch
+D:\Visual Studio\source\repos\Lab2\include\utmatrix.h(166): message : while compiling class template member function 'TVector<TVector<ValType>> &TVector<TVector<ValType>>::operator +=(const TVector<TVector<ValType>> &)'
+          with
+          [
+              ValType=int
+          ]
+D:\Visual Studio\source\repos\Lab2\include\utmatrix.h(182): message : see reference to function template instantiation 'TVector<TVector<ValType>> &TVector<TVector<ValType>>::operator +=(const TVector<TVector<ValType>> &)' being compiled
+          with
+          [
+              ValType=int
+          ]
+  sample_utmatrix.vcxproj -> D:\Visual Studio\source\repos\Lab2\sln\vc10\Debug\sample_utmatrix.exe
