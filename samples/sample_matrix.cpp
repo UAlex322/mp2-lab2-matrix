@@ -25,6 +25,7 @@ void main()
   c = a + b;
   cout << "Matrix a = " << endl << a << endl;
   cout << "Matrix b = " << endl << b << endl;
+  cout << "Matrix a + b = " << endl << a + b << endl;
   cout << "Matrix c = a + b" << endl << c << endl;
 }
 //---------------------------------------------------------------------------

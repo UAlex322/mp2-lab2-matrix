@@ -215,3 +215,45 @@ TEST(TVector, cant_multiply_vectors_with_not_equal_size)
     ASSERT_ANY_THROW(a * b);
 }
 
+// My tests
+
+TEST(TVector, at_works_properly)
+{
+    TVector<int> a(5);
+
+    ASSERT_NO_THROW(a.at(0));
+    ASSERT_ANY_THROW(a.at(-1));
+    ASSERT_ANY_THROW(a.at(5));
+}
+
+TEST(TVector, const_at_works_properly)
+{
+    const TVector<int> a(5);
+
+    ASSERT_NO_THROW(a.at(0));
+    ASSERT_ANY_THROW(a.at(-1));
+    ASSERT_ANY_THROW(a.at(5));
+}
+
+TEST(TVector, input_operator_works_properly)
+{
+    stringstream strs("27 18 28 18");
+    TVector<int> a(4), b(4);
+    b[0] = 27, b[1] = 18, b[2] = 28, b[3] = 18;
+
+    ASSERT_NO_THROW(strs >> a);
+    EXPECT_EQ(a,b);
+}
+
+TEST(TVector, output_operator_works_properly)
+{
+    stringstream strs;
+    TVector<int> a(4);
+    for (int i = 0; i < 4; ++i)
+            a[i] = i;
+
+    ASSERT_NO_THROW(strs << a);
+
+    EXPECT_EQ(strs.str(), "0 1 2 3 ");
+}
+

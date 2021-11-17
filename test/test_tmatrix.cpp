@@ -199,3 +199,58 @@ TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
 	ASSERT_ANY_THROW(a -= b);
 }
 
+// My tests
+
+TEST(TMatrix, at_works_properly)
+{
+	TMatrix<int> a(6);
+
+	ASSERT_NO_THROW(a.at(1,2));
+	ASSERT_NO_THROW(a.at(0,0));
+	ASSERT_ANY_THROW(a.at(-1,0));
+	ASSERT_ANY_THROW(a.at(0,-1));
+	ASSERT_ANY_THROW(a.at(6,3));
+	ASSERT_ANY_THROW(a.at(3,6));
+	ASSERT_ANY_THROW(a.at(-3,-1));
+	ASSERT_ANY_THROW(a.at(6,6));
+	ASSERT_ANY_THROW(a.at(2,1));
+}
+
+TEST(TMatrix, const_at_works_properly)
+{
+	const TMatrix<int> a(6);
+
+	ASSERT_NO_THROW(a.at(1,2));
+	ASSERT_NO_THROW(a.at(0,0));
+	ASSERT_ANY_THROW(a.at(-1,0));
+	ASSERT_ANY_THROW(a.at(0,-1));
+	ASSERT_ANY_THROW(a.at(6,3));
+	ASSERT_ANY_THROW(a.at(3,6));
+	ASSERT_ANY_THROW(a.at(-3,-1));
+	ASSERT_ANY_THROW(a.at(6,6));
+	ASSERT_ANY_THROW(a.at(2,1));
+}
+
+TEST(TMatrix, input_operator_works_properly)
+{
+	stringstream strs("27 18 28 18 28 45");
+	TMatrix<int> a(3), b(3);
+	b[0][0] = 27, b[0][1] = 18, b[0][2] = 28, 
+	b[1][1] = 18, b[1][2] = 28, b[2][2] = 45;
+
+	ASSERT_NO_THROW(strs >> a);
+	EXPECT_EQ(a,b);
+}
+
+TEST(TMatrix, output_operator_works_properly)
+{
+	stringstream strs;
+	TMatrix<int> a(3), b(3);
+	b[0][0] = 27, b[0][1] = 18, b[0][2] = 28,
+	b[1][1] = 18, b[1][2] = 28, b[2][2] = 45;
+
+	ASSERT_NO_THROW(strs << b);
+	strs >> a;
+	EXPECT_EQ(a,b);
+}
+
