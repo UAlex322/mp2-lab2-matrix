@@ -109,7 +109,7 @@ const ValType& TVector<ValType>::operator[](int pos) const
 template <class ValType> // доступ с проверкой корректности индекса
 ValType& TVector<ValType>::at(int pos)
 {
-    if (pos < StartIndex || pos >= Size)
+    if (pos < StartIndex || pos >= Size + StartIndex)
         throw runtime_error("TVector::at(): index is incorrect");
 
     return pVector[pos - StartIndex];
@@ -118,7 +118,7 @@ ValType& TVector<ValType>::at(int pos)
 template <class ValType> // доступ с проверкой корректности индекса для константных объектов
 const ValType& TVector<ValType>::at(int pos) const
 {
-    if (pos < StartIndex || pos >= Size)
+    if (pos < StartIndex || pos >= Size + StartIndex)
         throw runtime_error("TVector::at(): index is incorrect");
 
     return pVector[pos - StartIndex];
@@ -256,6 +256,12 @@ public:
   TMatrix(const TMatrix &mt);                    // копирование
   TMatrix(const TVector<TVector<ValType> > &mt); // преобразование типа
 
+  bool operator==(const TMatrix &mt) const;      // сравнение
+  bool operator!=(const TMatrix &mt) const;      // сравнение
+  TMatrix& operator= (const TMatrix &mt);        // присваивание
+  TMatrix  operator+ (const TMatrix &mt);        // сложение
+  TMatrix  operator- (const TMatrix &mt);        // вычитание
+
   ValType& at(int i, int j);                     // доступ к ячейке матрицы с проверкой индекса
   const ValType& at(int i, int j) const;         // доступ к ячейке константной матрицы с проверкой индекса
 
@@ -291,6 +297,69 @@ TMatrix<ValType>::TMatrix(const TVector<TVector<ValType>> &mt): TVector<TVector<
         for (size_t j = i; j < Size; ++j)
             pVector[i][j] = mt[i][j];
 }
+
+template <class ValType> // сравнение
+bool TMatrix<ValType>::operator==(const TMatrix<ValType> &mt) const
+{
+    if (this == &mt) return true;
+    if (Size != mt.Size) return false;
+
+    for (size_t i = 0; i < Size; ++i) {
+        if (pVector[i] != mt.pVector[i]) return false;
+    }
+
+    return true;
+} /*-------------------------------------------------------------------------*/
+
+template <class ValType> // сравнение
+bool TMatrix<ValType>::operator!=(const TMatrix<ValType> &mt) const
+{
+    return !(*this == mt);
+} /*-------------------------------------------------------------------------*/
+
+template <class ValType> // присваивание
+TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
+{
+    if (this == &mt) return *this;
+
+    if (Size != mt.Size) {
+        delete[] pVector;
+        Size = mt.Size;
+        pVector = new TVector<ValType>[Size];
+    }
+
+    for (size_t i = 0; i < Size; ++i)
+        pVector[i] = mt.pVector[i];
+
+    return *this;
+
+} /*-------------------------------------------------------------------------*/
+
+template <class ValType> // сложение
+TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
+{
+    if (Size != mt.Size)
+        throw runtime_error("TMatrix::operator+(): sizes of matrices are different");
+        
+    TMatrix<ValType> res = *this;
+    for (size_t i = 0; i < Size; ++i)
+        res.pVector[i] += mt.pVector[i];
+
+    return res;
+} /*-------------------------------------------------------------------------*/
+
+template <class ValType> // вычитание
+TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
+{
+    if (Size != mt.Size)
+        throw runtime_error("TMatrix::operator-(): sizes of matrices are different");
+
+    TMatrix<ValType> res = *this;
+    for (size_t i = 0; i < Size; ++i)
+        res.pVector[i] -= mt.pVector[i];
+
+    return res;
+} /*-------------------------------------------------------------------------*/
 
 template <class ValType> // доступ к ячейке матрицы с проверкой индекса
 ValType& TMatrix<ValType>::at(int i, int j) {

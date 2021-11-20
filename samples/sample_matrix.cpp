@@ -10,22 +10,29 @@
 
 void main()
 {
-  TMatrix<int> a(5), b(5), c(5);
-  int i, j;
+	size_t a_size, b_size;
 
-  setlocale(LC_ALL, "Russian");
-  cout << "Тестирование программ поддержки представления треугольных матриц"
-    << endl;
-  for (i = 0; i < 5; i++)
-    for (j = i; j < 5; j++)
-    {
-      a[i][j] =  i * 10 + j;
-      b[i][j] = (i * 10 + j) * 100;
-    }
-  c = a + b;
-  cout << "Matrix a = " << endl << a << endl;
-  cout << "Matrix b = " << endl << b << endl;
-  cout << "Matrix a + b = " << endl << a + b << endl;
-  cout << "Matrix c = a + b" << endl << c << endl;
+	setlocale(LC_ALL, "Russian");
+	cout << "Тестирование программ поддержки представления треугольных матриц" << endl;
+
+	cout << "Введите размер верхнетреугольной матрицы А: ";
+	cin >> a_size;
+	cout << "Введите размер верхнетреугольной матрицы B: ";
+	cin >> b_size;
+
+	if (a_size != b_size)
+		cout << "Невозможно сложить и вычесть матрицы разного размера" << endl;
+	else {
+		TMatrix<int> A(a_size), B(b_size);
+		cout << "Введите матрицу А по строкам (только элементы в верхней половине):" << endl;
+		cin >> A;
+		cout << "Введите матрицу B по строкам (только элементы в верхней половине):" << endl;
+		cin >> B;
+
+		TMatrix<int> C = A + B, D = A - B;
+		cout << "Матрица A + B:" << endl << C << endl;
+		cout << "Матрица A - B:" << endl << D << endl;
+	}
+
 }
 //---------------------------------------------------------------------------
