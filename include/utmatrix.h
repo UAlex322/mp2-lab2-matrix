@@ -192,8 +192,8 @@ TVector<ValType> TVector<ValType>::operator*(const ValType &val)
 template <class ValType> // присваивающее сложение
 TVector<ValType>& TVector<ValType>::operator+=(const TVector<ValType> &v)
 {
-    if (Size != v.Size)
-        throw runtime_error("TVector::operator+(TVector): sizes of vectors are different");
+    if (Size != v.Size || StartIndex != v.StartIndex)
+        throw runtime_error("TVector::operator+=(TVector): sizes of vectors are different");
 
     for (size_t i = 0; i < Size; ++i)
         pVector[i] += v.pVector[i];
@@ -203,9 +203,6 @@ TVector<ValType>& TVector<ValType>::operator+=(const TVector<ValType> &v)
 template <class ValType> // сложение
 TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 {
-    if (Size != v.Size)
-        throw runtime_error("TVector::operator+(TVector): sizes of vectors are different");
-
     TVector<ValType> res = *this;
     res += v;
     return res;
@@ -214,8 +211,8 @@ TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 template <class ValType> // присваивающее вычитание
 TVector<ValType>& TVector<ValType>::operator-=(const TVector<ValType> &v)
 {
-    if (Size != v.Size)
-        throw runtime_error("TVector::operator+(TVector): sizes of vectors are different");
+    if (Size != v.Size || StartIndex != v.StartIndex)
+        throw runtime_error("TVector::operator-=(TVector): sizes of vectors are different");
 
     for (size_t i = 0; i < Size; ++i)
         pVector[i] -= v.pVector[i];
@@ -225,9 +222,6 @@ TVector<ValType>& TVector<ValType>::operator-=(const TVector<ValType> &v)
 template <class ValType> // вычитание
 TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 {
-    if (Size != v.Size)
-        throw runtime_error("TVector::operator+(TVector): sizes of vectors are different");
-
     TVector<ValType> res = *this;
     res -= v;
     return res;
