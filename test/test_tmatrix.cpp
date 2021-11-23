@@ -155,10 +155,9 @@ TEST(TMatrix, can_add_matrices_with_equal_size)
 
 	for (int i = 0; i < 6; ++i)
 		for (int j = i; j < 6; ++j)
-			c[i][j] = i + 2*j + 27;
+			c[i][j] = i + j + 16;
 
 	ASSERT_NO_THROW(a = a + b);
-	ASSERT_NO_THROW(a += b);
 	EXPECT_EQ(a, c);
 }
 
@@ -167,7 +166,6 @@ TEST(TMatrix, cant_add_matrices_with_not_equal_size)
 	TMatrix<int> a(6), b(5);
 
 	ASSERT_ANY_THROW(a = a + b);
-	ASSERT_ANY_THROW(a += b);
 }
 
 TEST(TMatrix, can_subtract_matrices_with_equal_size)
@@ -184,10 +182,9 @@ TEST(TMatrix, can_subtract_matrices_with_equal_size)
 
 	for (int i = 0; i < 6; ++i)
 		for (int j = i; j < 6; ++j)
-			c[i][j] = i - 2*j - 17;
+			c[i][j] = i - j - 6;
 
 	ASSERT_NO_THROW(a = a - b);
-	ASSERT_NO_THROW(a -= b);
 	EXPECT_EQ(a, c);
 }
 
@@ -196,7 +193,6 @@ TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
 	TMatrix<int> a(6), b(5);
 
 	ASSERT_ANY_THROW(a = a - b);
-	ASSERT_ANY_THROW(a -= b);
 }
 
 // My tests

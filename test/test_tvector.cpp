@@ -173,7 +173,6 @@ TEST(TVector, can_add_vectors_with_equal_size)
 {
   TVector<int> a(5), b(5);
 
-  ASSERT_NO_THROW(a += b);
   ASSERT_NO_THROW(a = a + b);
 }
 
@@ -181,7 +180,6 @@ TEST(TVector, cant_add_vectors_with_not_equal_size)
 {
     TVector<int> a(5), b(6);
 
-    ASSERT_ANY_THROW(a += b);
     ASSERT_ANY_THROW(a = a + b);
 }
 
@@ -189,7 +187,6 @@ TEST(TVector, can_subtract_vectors_with_equal_size)
 {
     TVector<int> a(5), b(5);
 
-    ASSERT_NO_THROW(a -= b);
     ASSERT_NO_THROW(a = a - b);
 }
 
@@ -197,7 +194,6 @@ TEST(TVector, cant_subtract_vectors_with_not_equal_size)
 {
     TVector<int> a(5), b(6);
 
-    ASSERT_ANY_THROW(a -= b);
     ASSERT_ANY_THROW(a = a - b);
 }
 

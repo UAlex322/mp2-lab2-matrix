@@ -9,7 +9,7 @@
 #define __TMATRIX_H__
 
 #include <iostream>
-
+#include <algorithm>
 using namespace std;
 
 const int MAX_VECTOR_SIZE = 100000000;
@@ -188,54 +188,74 @@ TVector<ValType> TVector<ValType>::operator*(const ValType &val)
     return res;
 } /*-------------------------------------------------------------------------*/
 
-
-template <class ValType> // присваивающее сложение
-TVector<ValType>& TVector<ValType>::operator+=(const TVector<ValType> &v)
-{
-    if (Size != v.Size || StartIndex != v.StartIndex)
-        throw runtime_error("TVector::operator+=(TVector): sizes of vectors are different");
-
-    for (size_t i = 0; i < Size; ++i)
-        pVector[i] += v.pVector[i];
-    return *this;
-} /*-------------------------------------------------------------------------*/
-
 template <class ValType> // сложение
 TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 {
-    TVector<ValType> res = *this;
-    res += v;
+    if (Size + StartIndex != v.Size + v.StartIndex)
+        throw runtime_error("TVector::operator+(): sizes of vectors are different");
+
+    TVector<ValType> res(max(Size, v.Size), min(StartIndex, v.StartIndex));
+    if (res.Size > Size) {
+        size_t diff = v.Size - Size;
+        for (size_t i = 0; i < diff; ++i)
+            res.pVector[i] = v.pVector[i];
+        for (size_t i = 0; i < Size; ++i)
+            res.pVector[i+diff] = pVector[i] + v.pVector[i+diff];
+    }
+    else {
+        size_t diff = Size - v.Size;
+        for (size_t i = 0; i < diff; ++i)
+            res.pVector[i] = pVector[i];
+        for (size_t i = 0; i < v.Size; ++i)
+            res.pVector[i+diff] = pVector[i+diff] + v.pVector[i];
+    }
+    
     return res;
-} /*-------------------------------------------------------------------------*/
-
-template <class ValType> // присваивающее вычитание
-TVector<ValType>& TVector<ValType>::operator-=(const TVector<ValType> &v)
-{
-    if (Size != v.Size || StartIndex != v.StartIndex)
-        throw runtime_error("TVector::operator-=(TVector): sizes of vectors are different");
-
-    for (size_t i = 0; i < Size; ++i)
-        pVector[i] -= v.pVector[i];
-    return *this;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // вычитание
 TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 {
-    TVector<ValType> res = *this;
-    res -= v;
+    if (Size + StartIndex != v.Size + v.StartIndex)
+        throw runtime_error("TVector::operator-(): sizes of vectors are different");
+
+    TVector<ValType> res(max(Size, v.Size), min(StartIndex, v.StartIndex));
+    if (res.Size > Size) {
+        size_t diff = v.Size - Size;
+        for (size_t i = 0; i < diff; ++i)
+            res.pVector[i] = v.pVector[i] * (-1);
+        for (size_t i = 0; i < Size; ++i)
+            res.pVector[i+diff] = pVector[i] - v.pVector[i+diff];
+    }
+    else {
+        size_t diff = Size - v.Size;
+        for (size_t i = 0; i < diff; ++i)
+            res.pVector[i] = pVector[i];
+        for (size_t i = 0; i < v.Size; ++i)
+            res.pVector[i+diff] = pVector[i+diff] - v.pVector[i];
+    }
+
     return res;
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // скалярное произведение
 ValType TVector<ValType>::operator*(const TVector<ValType> &v)
 {
-    if (Size != v.Size)
-        throw runtime_error("TVector::operator*(TVector): sizes of vectors are different");
+    if (Size + StartIndex != v.Size + v.StartIndex)
+        throw runtime_error("TVector::operator*(): sizes of vectors are different");
 
     ValType res = 0;
-    for (size_t i = 0; i < Size; ++i)
-        res += pVector[i] * v.pVector[i];
+    if (Size > v.Size) {
+        size_t diff = Size - v.Size;
+        for (size_t i = 0; i < v.Size; ++i)
+            res += pVector[i+diff] * v.pVector[i];
+    }
+    else {
+        size_t diff = v.Size - Size;
+        for (size_t i = 0; i < Size; ++i)
+            res += pVector[i] * v.pVector[i+diff];
+    }
+
     return res;
 } /*-------------------------------------------------------------------------*/
 
